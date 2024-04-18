@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { StDiv } from './popover.styled';
+import * as React from 'react';
 import { Props } from './popover.shared';
 import {
   useFloating,
@@ -33,19 +34,20 @@ function Popover({ children, content, position, open, setOpen, ...props }: Props
 
   return (
     <>
-      <div ref={refs.setReference} {...getReferenceProps()}>
-        {children}
-      </div>
+      {React.cloneElement(children, {
+        ref: refs.setReference,
+        ...getReferenceProps(),
+      })}
       {open && (
         <FloatingFocusManager context={context} modal={false}>
-          <div
+          <StDiv
             ref={refs.setFloating}
             style={floatingStyles}
             aria-labelledby={headingId}
             {...getFloatingProps()}
           >
             {content}
-          </div>
+          </StDiv>
         </FloatingFocusManager>
       )}
     </>
