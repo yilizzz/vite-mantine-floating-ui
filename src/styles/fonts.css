@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Avenir-LT-Std';
+  src: url('../assets/fonts/Avenir-LT-Std-45-book.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Muli';
+  src: url('../assets/fonts/Muli-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../assets/fonts/Roboto-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
