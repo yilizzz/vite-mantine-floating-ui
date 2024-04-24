@@ -1,15 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Accordion } from './accordion';
-import { AccordionItem } from './accordion.shared';
+import { useState, ReactElement } from 'react';
+import { AccordionRoot, AccordionHeader, AccordionContent, AccordionItem } from './accordion';
 import Button from '@/components/buttons/button/Button';
-import { ReactElement, useState } from 'react';
-import { CircleArrowDown } from 'lucide-react';
-import { CircleArrowUp } from 'lucide-react';
 
 export default {
   title: 'Components/datadisplay/accordion',
-  component: Accordion,
-} as Meta<typeof Accordion>;
+  component: AccordionRoot,
+} as Meta<typeof AccordionRoot>;
 
 export const SomeComponent: React.FC<ReactElement> = () => {
   const [value, setValue] = useState('');
@@ -21,27 +18,19 @@ export const SomeComponent: React.FC<ReactElement> = () => {
   );
 };
 
-const Template: StoryFn<typeof Accordion> = (args) => {
-  const items: AccordionItem[] = [
-    {
-      header: (
-        <>
-          <p>Statement 1</p>
-          <CircleArrowDown></CircleArrowDown>
-        </>
-      ),
-      content: <SomeComponent key={null} type={''} props={undefined} />,
-    },
-    {
-      header: 'Statement 2',
-      content: <Button onClick={() => alert('Statement 2 clicked')}>Click</Button>,
-    },
-    {
-      header: 'Statement 3',
-      content: <a href="https://namkin.fr/fr/">Namkin</a>,
-    },
-  ];
-  return <Accordion items={items}></Accordion>;
+const Template: StoryFn<typeof AccordionRoot> = (args) => {
+  return (
+    <AccordionRoot {...args}>
+      {['React', 'Solid', 'Vue'].map((item, index) => (
+        <AccordionItem key={index}>
+          <AccordionHeader>{item}</AccordionHeader>
+          <AccordionContent>
+            <SomeComponent key={null} type={''} props={undefined} />
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </AccordionRoot>
+  );
 };
 
 export const Default = Template.bind({});

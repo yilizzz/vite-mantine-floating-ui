@@ -4,32 +4,50 @@ import {
   StAccordionContent,
   StAccordionHeader,
 } from './accordion.styled';
-import { AccordionProps } from './accordion.shared';
-import { useState } from 'react';
 
-export const Accordion = ({ items }: AccordionProps) => {
-  const [activeIndex, setActiveIndex] = useState(-1);
+import {
+  AccordionRootProps,
+  AccordionItemProps,
+  AccordionHeaderProps,
+  AccordionContentProps,
+} from './accordion.shared';
 
-  const handleItemClick = (index: number) => {
-    setActiveIndex(index === activeIndex ? -1 : index);
-  };
+import { CirclePlus } from 'lucide-react';
+import { CircleMinus } from 'lucide-react';
+import { useContext, useState } from 'react';
+import React from 'react';
 
+const AccordionContext = React.createContext({
+  open: false,
+  setOpen: (open: any) => {},
+});
+
+export const AccordionRoot: React.FC<AccordionRootProps> = ({ children }) => {
+  return <StAccordionRoot>{children}</StAccordionRoot>;
+};
+
+export const AccordionItem: React.FC<AccordionItemProps> = ({ children }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <StAccordionRoot>
-      {items.map((item, index: number) => (
-        <StAccordionItem key={index}>
-          <StAccordionHeader
-            onClick={() => handleItemClick(index)}
-            className={`${index === activeIndex ? 'active' : ''}`}
-          >
-            {item.header}
-            {index === activeIndex ? <span>&#8593;</span> : <span>&#8595;</span>}
-          </StAccordionHeader>
-          <StAccordionContent className={`${index === activeIndex ? 'active' : ''}`}>
-            {item.content}
-          </StAccordionContent>
-        </StAccordionItem>
-      ))}
-    </StAccordionRoot>
+    <AccordionContext.Provider value={{ open, setOpen }}>
+      <StAccordionItem>{children}</StAccordionItem>
+    </AccordionContext.Provider>
+  );
+};
+
+export const AccordionHeader: React.FC<AccordionHeaderProps> = ({ children }) => {
+  const { open, setOpen } = useContext(AccordionContext);
+  return (
+    <StAccordionHeader onClick={() => setOpen(!open)}>
+      {open ? <CircleMinus /> : <CirclePlus />}
+      {children}
+    </StAccordionHeader>
+  );
+};
+
+export const AccordionContent: React.FC<AccordionContentProps> = ({ children }) => {
+  const { open, setOpen } = useContext(AccordionContext);
+  return (
+    <StAccordionContent style={{ display: open ? 'block' : 'none' }}>{children}</StAccordionContent>
   );
 };
