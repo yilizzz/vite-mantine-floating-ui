@@ -1,8 +1,7 @@
-import { HTMLAttributes, ReactElement } from 'react';
-
-export type Props = HTMLAttributes<HTMLDivElement> & {
-  items?: {
-    title?: string;
-    content?: string;
-  }[];
-};
+export interface AccordionItem {
+  header: React.ReactNode;
+  content: React.ReactNode;
+}
+export interface AccordionProps {
+  items: AccordionItem[];
+}

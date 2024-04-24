@@ -1,35 +1,48 @@
 import { Meta, StoryFn } from '@storybook/react';
-import Accordion from './accordion';
+import { Accordion } from './accordion';
+import { AccordionItem } from './accordion.shared';
+import Button from '@/components/buttons/button/Button';
+import { ReactElement, useState } from 'react';
+import { CircleArrowDown } from 'lucide-react';
+import { CircleArrowUp } from 'lucide-react';
 
 export default {
   title: 'Components/datadisplay/accordion',
   component: Accordion,
 } as Meta<typeof Accordion>;
 
+export const SomeComponent: React.FC<ReactElement> = () => {
+  const [value, setValue] = useState('');
+  return (
+    <>
+      <input onChange={(e) => setValue(e.target.value)}></input>
+      <Button onClick={() => alert(value)}>Click</Button>
+    </>
+  );
+};
+
 const Template: StoryFn<typeof Accordion> = (args) => {
-  const items = [
+  const items: AccordionItem[] = [
     {
-      title: 'Statement 1',
-      content: 'There is only 1 truth.',
+      header: (
+        <>
+          <p>Statement 1</p>
+          <CircleArrowDown></CircleArrowDown>
+        </>
+      ),
+      content: <SomeComponent key={null} type={''} props={undefined} />,
     },
     {
-      title: 'Statement 2',
-      content: 'There are 2 truths.',
+      header: 'Statement 2',
+      content: <Button onClick={() => alert('Statement 2 clicked')}>Click</Button>,
     },
     {
-      title: 'Statement 3',
-      content: 'There are 3 truths, and I am lying.',
+      header: 'Statement 3',
+      content: <a href="https://namkin.fr/fr/">Namkin</a>,
     },
   ];
-  return <Accordion items={items} {...args} />;
+  return <Accordion items={items}></Accordion>;
 };
 
-const TemplateEmpty: StoryFn<typeof Accordion> = (args) => {
-  const items = [];
-  return <Accordion items={items} {...args} />;
-};
 export const Default = Template.bind({});
 Default.args = {};
-
-export const NoData = TemplateEmpty.bind({});
-NoData.args = {};

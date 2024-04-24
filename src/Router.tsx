@@ -9,22 +9,27 @@ export const breadcrumbItems = [
   {
     link: '/',
     label: 'Home',
+    active: true,
   },
   {
     link: '/category',
     label: 'Category',
+    active: false,
   },
   {
     link: '/category/subcategory',
     label: 'Subcategory',
+    active: false,
   },
   {
     link: '/category/subcategory/type',
     label: 'Type',
+    active: false,
   },
   {
     link: '/category/subcategory/type/items',
     label: 'Items',
+    active: false,
   },
 ];
 

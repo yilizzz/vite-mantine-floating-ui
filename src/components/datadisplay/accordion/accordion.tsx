@@ -1,42 +1,35 @@
-import { Stack } from '@mantine/core';
-import { Props } from './accordion.shared';
 import {
+  StAccordionRoot,
   StAccordionItem,
-  StAccordionTitle,
   StAccordionContent,
-  StAccordionNodata,
+  StAccordionHeader,
 } from './accordion.styled';
+import { AccordionProps } from './accordion.shared';
 import { useState } from 'react';
 
-function Accordion({ children, items, ...props }: Props) {
-  const [activeIndex, setActiveIndex] = useState(null);
-  const onTitleClick = (index) => {
-    index === activeIndex ? setActiveIndex(null) : setActiveIndex(index);
+export const Accordion = ({ items }: AccordionProps) => {
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const handleItemClick = (index: number) => {
+    setActiveIndex(index === activeIndex ? -1 : index);
   };
-  if (items?.length === 0 || items === undefined) {
-    return (
-      <Stack gap="xs">
-        <StAccordionNodata>No Data</StAccordionNodata>
-      </Stack>
-    );
-  }
-  const renderedItems = items.map((item, index) => {
-    const isActive = index === activeIndex;
-    return (
-      <StAccordionItem key={item.title}>
-        <StAccordionTitle
-          className={`${isActive ? 'active' : ''}`}
-          onClick={() => onTitleClick(index)}
-        >
-          {item.title}
-          {isActive ? <span>&#8593;</span> : <span>&#8595;</span>}
-        </StAccordionTitle>
-        {isActive ? <StAccordionContent>{item.content}</StAccordionContent> : <></>}
-      </StAccordionItem>
-    );
-  });
 
-  return <Stack gap="xs">{renderedItems}</Stack>;
-}
-
-export default Accordion;
+  return (
+    <StAccordionRoot>
+      {items.map((item, index: number) => (
+        <StAccordionItem key={index}>
+          <StAccordionHeader
+            onClick={() => handleItemClick(index)}
+            className={`${index === activeIndex ? 'active' : ''}`}
+          >
+            {item.header}
+            {index === activeIndex ? <span>&#8593;</span> : <span>&#8595;</span>}
+          </StAccordionHeader>
+          <StAccordionContent className={`${index === activeIndex ? 'active' : ''}`}>
+            {item.content}
+          </StAccordionContent>
+        </StAccordionItem>
+      ))}
+    </StAccordionRoot>
+  );
+};

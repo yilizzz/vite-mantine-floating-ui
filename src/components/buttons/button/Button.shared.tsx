@@ -6,5 +6,5 @@ export type Props = HTMLAttributes<HTMLButtonElement> & {
   iconRight?: ReactElement;
   disabled?: boolean;
   size?: 'small' | 'medium' | 'large';
-  squared: boolean;
+  squared?: boolean;
 };

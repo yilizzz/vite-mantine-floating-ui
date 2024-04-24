@@ -9,7 +9,7 @@ function Button({
   disabled,
   iconLeft,
   iconRight,
-  squared,
+  squared = false,
   ...props
 }: Props) {
   return (

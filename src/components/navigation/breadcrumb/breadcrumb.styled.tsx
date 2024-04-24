@@ -35,11 +35,9 @@ export const StBreadcrumbLink = styled.a<Props>`
     color: orangered;
   }
 `;
-export const StBreadcrumbRoot = styled(Group)<Props>(() => [
-  {
-    position: 'relative',
-  },
-]);
+export const StBreadcrumbRoot = styled(Group)<Props>({
+  position: 'relative',
+});
 export const StBreadcrumbPoints = styled(Center)<Props>`
   cursor: pointer;
   padding: ${rem(5)};

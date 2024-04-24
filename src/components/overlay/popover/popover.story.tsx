@@ -34,7 +34,7 @@ const Template: StoryFn<typeof Popover> = (args) => {
   return (
     <>
       <Center w={50} h={50} style={{ border: '1px solid gray' }}></Center>
-      <Center w={1000} h={500} style={{ border: '1px solid gray' }}>
+      <Center w={500} h={500} style={{ border: '1px solid gray' }}>
         <Popover
           {...args}
           open={isOpen}
