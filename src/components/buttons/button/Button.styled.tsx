@@ -4,79 +4,77 @@ import { Props } from './Button.shared';
 import { theme } from '@/theme';
 
 export const StButton = styled.button<Props>(({ variant, size, disabled, squared }) => [
-  `
-    color: #FFFFFF;
-    font-family: 'Muli';
-    font-style: normal;
-    border:none;
-    cursor:pointer;
-   
-    `,
+  {
+    color: '#FFFFFF',
+    fontFamily: 'Muli',
+    fontStyle: 'normal',
+    border: 'none',
+    cursor: 'pointer',
+  },
   (variant === 'primary' ||
     variant === 'secondary' ||
     variant === 'destructive' ||
     variant === 'outline' ||
-    variant === 'ghost') &&
-    `
-      border-radius:  ${rem(8)};
-       
-    `,
-  variant === 'primary' && `background-color: ${theme.colors.greenColor[9]};`,
-  variant === 'secondary' && `background-color:  ${theme.colors.greenColor[6]};`,
-  variant === 'destructive' && `background-color: ${theme.colors.redColor[9]};`,
+    variant === 'ghost') && {
+    borderRadius: rem(8),
+  },
+  variant === 'primary' && {
+    backgroundColor: theme.colors.greenColor[9],
+  },
+  variant === 'secondary' && {
+    backgroundColor: theme.colors.greenColor[6],
+  },
+  variant === 'destructive' && {
+    backgroundColor: theme.colors.redColor[9],
+  },
 
-  variant === 'outline' &&
-    `background-color: transparent; 
-    color: ${theme.colors.greenColor[9]}; 
-    border:1px solid ${theme.colors.greenColor[9]}`,
+  variant === 'outline' && {
+    backgroundColor: 'transparent',
+    color: theme.colors.greenColor[9],
+    border: `1px solid ${theme.colors.greenColor[9]}`,
+  },
 
-  variant === 'ghost' &&
-    `background-color: transparent; 
-    color: ${theme.colors.greenColor[9]}; 
-    :hover{
-        background-color:  ${theme.colors.greenColor[0]};
-    }`,
+  variant === 'ghost' && {
+    backgroundColor: 'transparent',
+    color: theme.colors.greenColor[9],
+    ':hover': {
+      backgroundColor: theme.colors.greenColor[0],
+    },
+  },
 
-  variant === 'link' &&
-    `
-    background-color: transparent; 
-    color: ${theme.colors.greenColor[9]}; 
-    text-underline-offset: ${rem(5)};
-    :hover{
-        text-decoration: underline;
-    }`,
+  variant === 'link' && {
+    backgroundColor: 'transparent',
+    color: theme.colors.greenColor[9],
+    textUnderlineOffset: rem(5),
+    ':hover': {
+      textDecoration: 'underline',
+    },
+  },
 
-  size === 'small' &&
-    `
-    font-size: ${rem(12)};
-    font-weight: 300;
-    line-height: ${rem(16)};
-    padding: ${rem(5)} ${rem(8)};
-      `,
-  size === 'medium' &&
-    `
-    font-size: ${rem(16)};
-    font-weight: 500;
-    line-height: ${rem(20)};
-    padding: ${rem(5)} ${rem(12)};
-      `,
-  size === 'large' &&
-    `
-    font-size: ${rem(20)};
-    font-weight: 700;
-    line-height: ${rem(24)};
-    padding: ${rem(8)} ${rem(15)};
-      `,
+  size === 'small' && {
+    fontSize: rem(12),
+    fontWeight: 300,
+    lineHeight: rem(16),
+    padding: `${rem(5)} ${rem(12)}`,
+  },
+  size === 'medium' && {
+    fontSize: rem(16),
+    fontWeight: 500,
+    lineHeight: rem(20),
+    padding: `${rem(5)} ${rem(12)}`,
+  },
+  size === 'large' && {
+    fontSize: rem(20),
+    fontWeight: 700,
+    lineHeight: rem(24),
+    padding: `${rem(8)} ${rem(15)}`,
+  },
 
-  disabled &&
-    `
-    cursor: default;
-    background-color:  ${theme.colors.grayColor[5]};
-    color:  ${theme.colors.grayColor[0]};
-      `,
+  disabled && {
+    cursor: 'default',
+    backgroundColor: theme.colors.grayColor[5],
+    color: theme.colors.grayColor[0],
+  },
 
-  squared &&
-    `
-      padding:${rem(5)}
-    `,
+  squared && { padding: rem(5) },
 ]);
