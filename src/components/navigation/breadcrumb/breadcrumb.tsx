@@ -18,25 +18,7 @@ function Breadcrumb({ children, variable = 'allLinks', items, ...props }: Props)
   if (items?.length === 0 || !items) {
     return <>No Data</>;
   }
-  // const renderedItems = items.map((item, index) => {
-  //   const isLastItem = index === items.length - 1;
-  //   return (
-  //     <StBreadcrumb key={index}>
-  //       <StBreadcrumbLink href={item.link} className={`${item.active ? 'active' : ''}`}>
-  //         {item.label}
-  //       </StBreadcrumbLink>
-  //       {!isLastItem && <span>&#10513;</span>}
-  //     </StBreadcrumb>
-  //   );
-  // });
 
-  // const renderedMenu = middleMenuItems?.map((item, index) => {
-  //   return (
-  //     <StBreadcrumbLink key={index} href={item.link}>
-  //       {item.label}
-  //     </StBreadcrumbLink>
-  //   );
-  // });
   return (
     <Group gap="xs">
       {variable === 'allLinks' ? (
