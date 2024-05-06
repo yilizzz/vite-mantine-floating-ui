@@ -1,9 +1,7 @@
-import React, { useRef } from 'react';
-
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import useFileUpload from 'react-use-file-upload';
-import { FileUpload } from '@ark-ui/react';
 
-const FileUploader = () => {
+const FileUploader = forwardRef((props, ref) => {
   const {
     files,
     fileNames,
@@ -16,7 +14,12 @@ const FileUploader = () => {
     setFiles,
     removeFile,
   } = useFileUpload();
-
+  // Use useImperativeHandle to expose specific values to the parent component's ref
+  useImperativeHandle(ref, () => ({
+    getFilesData() {
+      return files; // This method can be called by the parent to get the child's data
+    },
+  }));
   const inputRef = useRef();
 
   return (
@@ -24,13 +27,68 @@ const FileUploader = () => {
       {/* Display the files to be uploaded */}
       <div>
         <ul>
-          {fileNames.map((name) => (
-            <li key={name}>
-              <span>{name}</span>
+          {fileNames.map((name) => {
+            // Find the file object corresponding to the current file name
+            const file = files.find((file) => file.name === name);
 
-              <span onClick={() => removeFile(name)}>delete</span>
-            </li>
-          ))}
+            // Determine how to display the file based on its type
+            let fileDisplay;
+
+            if (file) {
+              const fileURL = URL.createObjectURL(file);
+
+              if (file.type.startsWith('image/')) {
+                // Display an image file directly using an <img> tag
+                fileDisplay = (
+                  <img
+                    src={fileURL}
+                    alt={file.name}
+                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                  />
+                );
+              } else if (file.type === 'application/pdf') {
+                // Provide a link to view/download a PDF
+                fileDisplay = (
+                  <a href={fileURL} target="_blank" rel="noopener noreferrer">
+                    View PDF
+                  </a>
+                );
+              } else if (
+                /application\/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)/.test(
+                  file.type
+                )
+              ) {
+                // Provide a link to download a Word document
+                fileDisplay = (
+                  <a href={fileURL} download={file.name}>
+                    Download Word Document
+                  </a>
+                );
+              } else {
+                // General fallback for other file types
+                fileDisplay = (
+                  <a href={fileURL} download={file.name}>
+                    Download File
+                  </a>
+                );
+              }
+            }
+
+            return (
+              <li key={name}>
+                <span>{name}</span>
+                <span>{fileDisplay}</span>
+                <span
+                  onClick={() => {
+                    removeFile(name);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  delete
+                </span>
+              </li>
+            );
+          })}
         </ul>
 
         {files.length > 0 && (
@@ -40,7 +98,13 @@ const FileUploader = () => {
             <li>Total Bytes: {totalSizeInBytes}</li>
 
             <li className="clear-all">
-              <button onClick={() => clearAllFiles()}>Clear All</button>
+              <button
+                onClick={() => {
+                  clearAllFiles();
+                }}
+              >
+                Clear All
+              </button>
             </li>
           </ul>
         )}
@@ -48,7 +112,6 @@ const FileUploader = () => {
 
       {/* Provide a drop zone and an alternative button inside it to upload files. */}
       <div
-        //   css={DropzoneCSS}
         style={{ border: '1px solid gray', height: '50vh' }}
         onDragEnter={handleDragDropEvent}
         onDragOver={handleDragDropEvent}
@@ -75,5 +138,5 @@ const FileUploader = () => {
       </div>
     </div>
   );
-};
+});
 export default FileUploader;
