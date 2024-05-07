@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactElement } from 'react';
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
-  variable?: 'allLinks' | 'link-menu';
+  variant?: 'allLinks' | 'link-menu';
   items?: {
     active?: boolean;
     link?: string;

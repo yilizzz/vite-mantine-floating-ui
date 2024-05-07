@@ -1,7 +1,19 @@
 import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import useFileUpload from 'react-use-file-upload';
+import {
+  StFileUploaderRoot,
+  StFileUploaderInfo,
+  StFileUploaderOperation,
+  StFileUploaderList,
+  StFileUploaderItem,
+  StFileUploaderDetails,
+  StFileUploaderInfoText,
+} from './file-uploader.styled';
+import Button from '@/components/buttons/button/Button';
+import { X } from 'lucide-react';
 
 const FileUploader = forwardRef((props, ref) => {
+  const { variant = 'row' } = props;
   const {
     files,
     fileNames,
@@ -20,99 +32,114 @@ const FileUploader = forwardRef((props, ref) => {
       return files; // This method can be called by the parent to get the child's data
     },
   }));
+  useImperativeHandle(ref, () => ({
+    getFormData() {
+      return createFormData();
+    },
+  }));
   const inputRef = useRef();
+  useEffect(() => {
+    if (props.uploadDone) {
+      clearAllFiles();
+      props.resetUploadDone();
+    }
+  }, [props.uploadDone]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {/* Display the files to be uploaded */}
-      <div>
-        <ul>
-          {fileNames.map((name) => {
-            // Find the file object corresponding to the current file name
-            const file = files.find((file) => file.name === name);
+    <StFileUploaderRoot variant={variant}>
+      {files.length > 0 ? (
+        <StFileUploaderInfo>
+          <StFileUploaderList>
+            {fileNames.map((name) => {
+              // Find the file object corresponding to the current file name
+              const file = files.find((file) => file.name === name);
 
-            // Determine how to display the file based on its type
-            let fileDisplay;
+              // Determine how to display the file based on its type
+              let fileDisplay;
 
-            if (file) {
-              const fileURL = URL.createObjectURL(file);
+              if (file) {
+                const fileURL = URL.createObjectURL(file);
 
-              if (file.type.startsWith('image/')) {
-                // Display an image file directly using an <img> tag
-                fileDisplay = (
-                  <img
-                    src={fileURL}
-                    alt={file.name}
-                    style={{ maxWidth: '100px', maxHeight: '100px' }}
-                  />
-                );
-              } else if (file.type === 'application/pdf') {
-                // Provide a link to view/download a PDF
-                fileDisplay = (
-                  <a href={fileURL} target="_blank" rel="noopener noreferrer">
-                    View PDF
-                  </a>
-                );
-              } else if (
-                /application\/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)/.test(
-                  file.type
-                )
-              ) {
-                // Provide a link to download a Word document
-                fileDisplay = (
-                  <a href={fileURL} download={file.name}>
-                    Download Word Document
-                  </a>
-                );
-              } else {
-                // General fallback for other file types
-                fileDisplay = (
-                  <a href={fileURL} download={file.name}>
-                    Download File
-                  </a>
-                );
+                if (file.type.startsWith('image/')) {
+                  // Display an image file directly using an <img> tag
+                  fileDisplay = (
+                    <img
+                      src={fileURL}
+                      alt={file.name}
+                      style={{ maxWidth: '100px', maxHeight: '100px' }}
+                    />
+                  );
+                } else if (file.type === 'application/pdf') {
+                  // Provide a link to view/download a PDF
+                  fileDisplay = (
+                    <a href={fileURL} target="_blank" rel="noopener noreferrer">
+                      View PDF
+                    </a>
+                  );
+                } else if (
+                  /application\/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)/.test(
+                    file.type
+                  )
+                ) {
+                  // Provide a link to download a Word document
+                  fileDisplay = (
+                    <a href={fileURL} download={file.name}>
+                      Download Word Document
+                    </a>
+                  );
+                } else {
+                  // General fallback for other file types
+                  fileDisplay = (
+                    <a href={fileURL} download={file.name}>
+                      Download File
+                    </a>
+                  );
+                }
               }
-            }
 
-            return (
-              <li key={name}>
-                <span>{name}</span>
-                <span>{fileDisplay}</span>
-                <span
+              return (
+                <StFileUploaderItem key={name}>
+                  <span
+                    onClick={() => {
+                      removeFile(name);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <X />
+                  </span>
+                  <span style={{ fontWeight: 'bold' }}>{name}</span>
+
+                  <span>{fileDisplay}</span>
+                </StFileUploaderItem>
+              );
+            })}
+          </StFileUploaderList>
+
+          {files.length > 0 && (
+            <StFileUploaderDetails>
+              <li>File types found: {fileTypes.join(', ')}</li>
+              <li>Total Size: {totalSize}</li>
+              <li>Total Bytes: {totalSizeInBytes}</li>
+
+              <li className="clear-all">
+                <Button
+                  variant="secondary"
                   onClick={() => {
-                    removeFile(name);
+                    clearAllFiles();
                   }}
-                  style={{ cursor: 'pointer' }}
                 >
-                  delete
-                </span>
+                  Clear All
+                </Button>
               </li>
-            );
-          })}
-        </ul>
-
-        {files.length > 0 && (
-          <ul>
-            <li>File types found: {fileTypes.join(', ')}</li>
-            <li>Total Size: {totalSize}</li>
-            <li>Total Bytes: {totalSizeInBytes}</li>
-
-            <li className="clear-all">
-              <button
-                onClick={() => {
-                  clearAllFiles();
-                }}
-              >
-                Clear All
-              </button>
-            </li>
-          </ul>
-        )}
-      </div>
+            </StFileUploaderDetails>
+          )}
+        </StFileUploaderInfo>
+      ) : (
+        <StFileUploaderInfoText>Files will be showed here</StFileUploaderInfoText>
+      )}
 
       {/* Provide a drop zone and an alternative button inside it to upload files. */}
-      <div
-        style={{ border: '1px solid gray', height: '50vh' }}
+      <StFileUploaderOperation
         onDragEnter={handleDragDropEvent}
         onDragOver={handleDragDropEvent}
         onDrop={(e) => {
@@ -122,7 +149,9 @@ const FileUploader = forwardRef((props, ref) => {
       >
         <p>Drag and drop files here</p>
 
-        <button onClick={() => inputRef.current.click()}>Or select files to upload</button>
+        <Button type="button" onClick={() => inputRef.current.click()}>
+          Or select files to upload
+        </Button>
 
         {/* Hide the crappy looking default HTML input */}
         <input
@@ -135,8 +164,8 @@ const FileUploader = forwardRef((props, ref) => {
             inputRef.current.value = null;
           }}
         />
-      </div>
-    </div>
+      </StFileUploaderOperation>
+    </StFileUploaderRoot>
   );
 });
 export default FileUploader;

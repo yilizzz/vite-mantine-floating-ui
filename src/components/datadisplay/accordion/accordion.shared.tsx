@@ -8,9 +8,6 @@ export interface AccordionItemProps {
 
 export interface AccordionHeaderProps {
   children: React.ReactNode;
-  // iconOpened?: React.ReactNode;
-  // iconClosed?: React.ReactNode;
-  // iconPosition?: 'left' | 'right';
 }
 
 export interface AccordionContentProps {

@@ -10,7 +10,7 @@ import {
 
 import { useState } from 'react';
 
-function Breadcrumb({ children, variable = 'allLinks', items, ...props }: Props) {
+function Breadcrumb({ children, variant = 'allLinks', items, ...props }: Props) {
   const [spread, setSpread] = useState(false);
   const lastIndex = items?.length - 1;
   const middleMenuItems = items.slice(1, -1);
@@ -21,7 +21,7 @@ function Breadcrumb({ children, variable = 'allLinks', items, ...props }: Props)
 
   return (
     <Group gap="xs">
-      {variable === 'allLinks' ? (
+      {variant === 'allLinks' ? (
         items.map((item, index) => {
           const isLastItem = index === items.length - 1;
           return (

@@ -2,12 +2,12 @@ import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import Breadcrumb from '@/components/navigation/breadcrumb/breadcrumb';
 import { breadcrumbItems } from '@/Router';
-import { Stack } from '@mantine/core';
+import { Stack, Flex, Group } from '@mantine/core';
 import MyAccordion from '@/components/MyAccordion';
 import { useState, useRef } from 'react';
+import { useFormik } from 'formik';
 
 import FileUploader from '@/components/inputs/file-upload/file-uploader';
-import useFileUpload from 'react-use-file-upload';
 
 import axios from 'axios';
 
@@ -32,20 +32,36 @@ export function HomePage() {
     { title: '3', content: <ToggleButton>click</ToggleButton> },
   ];
 
+  const formik = useFormik({
+    initialValues: {
+      input1: false,
+      input2: '',
+      input3: '1',
+    },
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
   const fileUploaderRef = useRef();
-  const handleGetFiles = async () => {
+  const [uploadDone, setUploadDone] = useState(false);
+  const resetUploadDone = () => {
+    setUploadDone(false);
+  };
+  const handleSubmit = async (values) => {
     // Access the child's data through the ref and its current method
     if (fileUploaderRef.current) {
-      const files = fileUploaderRef.current.getFilesData();
-      console.log(files);
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file);
-      });
+      const formData = fileUploaderRef.current.getFormData();
+      console.log(formData);
+
+      // Append other values from the form
+      for (const [key, value] of Object.entries(values)) {
+        formData.append(key, value);
+      }
       try {
-        const res = await axios.post('http://localhost:3001/upload', formData, {
+        const res = await axios.post('http://localhost:3001/formik/upload', formData, {
           headers: { 'content-type': 'multipart/form-data' },
         });
+        setUploadDone(true);
         console.log('File uploaded successfully', res.data);
       } catch (error) {
         console.error('Failed to submit files.');
@@ -57,14 +73,77 @@ export function HomePage() {
     <Stack justify="center" align="center">
       <Welcome />
       <ColorSchemeToggle />
-      <Breadcrumb items={breadcrumbItems} variable="allLinks" />
-      <Breadcrumb items={breadcrumbItems} variable="link-menu" />
+      <Breadcrumb items={breadcrumbItems} variant="allLinks" />
+      <Breadcrumb items={breadcrumbItems} variant="link-menu" />
       <MyAccordion list={list} />
-
-      <div>
-        <FileUploader ref={fileUploaderRef} />
-      </div>
-      <button onClick={handleGetFiles}>Get Files</button>
+      <form onSubmit={formik.handleSubmit}>
+        <Flex
+          w="80%"
+          gap="md"
+          justify="center"
+          align="flex-start"
+          direction="column"
+          wrap="wrap"
+          bg="rgba(0, 0, 0, .3)"
+          m="md"
+          p="md"
+        >
+          <Stack>
+            <label htmlFor="input1">input1 : </label>
+            <input
+              id="input1"
+              name="input1"
+              type="checkbox"
+              checked={formik.values.input1}
+              onChange={() => {
+                formik.setFieldValue('input1', !formik.values.input1);
+              }}
+            />
+          </Stack>
+          <Stack>
+            <label htmlFor="input2">input2 : </label>
+            <input
+              id="input2"
+              name="input2"
+              type="text"
+              value={formik.values.input2}
+              onChange={(e) => {
+                formik.setFieldValue('input2', e.target.value);
+              }}
+            />
+          </Stack>
+          <fieldset>
+            <legend>Input3 : Select one</legend>
+            {list.map((item) => {
+              return (
+                <div key={item.title}>
+                  {' '}
+                  <input
+                    type="radio"
+                    id={item.title}
+                    name="input3"
+                    value={formik.values.input3}
+                    onChange={(e) => {
+                      formik.setFieldValue('input3', e.target.value);
+                    }}
+                  />
+                  <label>{item.title}</label>
+                </div>
+              );
+            })}
+          </fieldset>
+          <Stack align="stretch" justify="center">
+            <label htmlFor="input4">input4 : </label>
+            <FileUploader
+              name="input4"
+              ref={fileUploaderRef}
+              uploadDone={uploadDone}
+              resetUploadDone={resetUploadDone}
+            />
+          </Stack>
+        </Flex>
+        <button>Submit</button>
+      </form>
     </Stack>
   );
 }
