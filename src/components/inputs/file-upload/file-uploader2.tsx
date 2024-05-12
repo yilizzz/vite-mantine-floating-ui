@@ -1,4 +1,4 @@
-import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useFileUpload from 'react-use-file-upload';
 import { X } from 'lucide-react';
 import {
@@ -12,7 +12,7 @@ import {
 } from './file-uploader.styled';
 import Button from '@/components/buttons/button/Button';
 
-const FileUploader = forwardRef((props, ref) => {
+const FileUploader2 = ({ value, setValue, uploadDone, resetUploadDone }) => {
   const {
     files,
     fileNames,
@@ -25,25 +25,19 @@ const FileUploader = forwardRef((props, ref) => {
     setFiles,
     removeFile,
   } = useFileUpload();
-  // Use useImperativeHandle to expose specific values to the parent component's ref
-  useImperativeHandle(ref, () => ({
-    getFilesData() {
-      return files; // This method can be called by the parent to get the child's data
-    },
-  }));
-  useImperativeHandle(ref, () => ({
-    getFormData() {
-      return createFormData();
-    },
-  }));
-  const inputRef = useRef();
-  useEffect(() => {
-    if (props.uploadDone) {
-      clearAllFiles();
-      props.resetUploadDone();
-    }
-  }, [props.uploadDone]);
 
+  useEffect(() => {
+    if (uploadDone) {
+      clearAllFiles();
+      resetUploadDone();
+    }
+  }, [uploadDone]);
+  const inputRef = useRef();
+  const handleChange = () => {
+    const updatedFiles = Array.from(files);
+    console.log(files);
+    setValue(prevFiles => [...prevFiles, ...updatedFiles]);
+  };
   return (
     <StFileUploaderRoot>
       {files.length > 0 ? (
@@ -94,6 +88,7 @@ const FileUploader = forwardRef((props, ref) => {
                     </a>
                   );
                 }
+                // URL.revokeObjectURL(fileURL);
               }
 
               return (
@@ -101,6 +96,7 @@ const FileUploader = forwardRef((props, ref) => {
                   <span
                     onClick={() => {
                       removeFile(name);
+                      handleChange();
                     }}
                     style={{ cursor: 'pointer' }}
                   >
@@ -125,6 +121,7 @@ const FileUploader = forwardRef((props, ref) => {
                   variant="secondary"
                   onClick={() => {
                     clearAllFiles();
+                    handleChange();
                   }}
                 >
                   Clear All
@@ -144,6 +141,7 @@ const FileUploader = forwardRef((props, ref) => {
         onDrop={(e) => {
           handleDragDropEvent(e);
           setFiles(e, 'a');
+          handleChange();
         }}
       >
         <p>Drag and drop files here</p>
@@ -160,11 +158,13 @@ const FileUploader = forwardRef((props, ref) => {
           style={{ display: 'none' }}
           onChange={(e) => {
             setFiles(e, 'a');
+            handleChange();
             inputRef.current.value = null;
           }}
         />
       </StFileUploaderOperation>
     </StFileUploaderRoot>
   );
-});
-export default FileUploader;
+};
+
+export default FileUploader2;

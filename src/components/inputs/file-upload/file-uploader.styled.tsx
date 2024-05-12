@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { rem } from 'polished';
-import { Props } from './file-uploader.shared';
-import { theme } from '@/theme';
 import { Group, Stack, Center } from '@mantine/core';
 import { keyframes } from '@emotion/css';
+import { Props } from './file-uploader.shared';
+import { theme } from '@/theme';
 
-export const StFileUploaderRoot = styled.div<Props>(({ variant }) => [
+export const StFileUploaderRoot = styled.div<Props>(() => [
   {
     display: 'flex',
     justifyContent: 'center',
@@ -18,13 +18,14 @@ export const StFileUploaderRoot = styled.div<Props>(({ variant }) => [
     color: theme.colors.greenColor[9],
     background: theme.colors.grayColor[0],
     fontSize: rem(16),
-  },
-  variant === 'row' && {
     flexDirection: 'row',
   },
-  variant === 'col' && {
-    flexDirection: 'column-reverse',
-  },
+  // variant === 'row' && {
+  //   flexDirection: 'row',
+  // },
+  // variant === 'col' && {
+  //   flexDirection: 'column-reverse',
+  // },
 ]);
 
 export const StFileUploaderInfo = styled.div<Props>({
