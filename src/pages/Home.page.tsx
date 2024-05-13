@@ -7,7 +7,7 @@ import MyAccordion from '@/components/MyAccordion';
 import { useState, useRef } from 'react';
 import { useFormik } from 'formik';
 
-import FileUploader from '@/components/inputs/file-upload/file-uploader';
+import FileUploader2 from '@/components/inputs/file-upload/file-uploader2';
 
 import axios from 'axios';
 
@@ -42,16 +42,14 @@ export function HomePage() {
       handleSubmit(values);
     },
   });
-  const fileUploaderRef = useRef();
-  const [uploadDone, setUploadDone] = useState(false);
-  const resetUploadDone = () => {
-    setUploadDone(false);
-  };
+  const [files, setFiles] = useState([]);
   const handleSubmit = async (values) => {
     // Access the child's data through the ref and its current method
-    if (fileUploaderRef.current) {
-      const formData = fileUploaderRef.current.getFormData();
-      console.log(formData);
+    if (files.length > 0) {
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('files', file);
+      }
 
       // Append other values from the form
       for (const [key, value] of Object.entries(values)) {
@@ -61,10 +59,11 @@ export function HomePage() {
         const res = await axios.post('http://localhost:3001/formik/upload', formData, {
           headers: { 'content-type': 'multipart/form-data' },
         });
-        setUploadDone(true);
-        console.log('File uploaded successfully', res.data);
+
+        console.log('Data and File uploaded successfully', res.data);
+        setFiles([]);
       } catch (error) {
-        console.error('Failed to submit files.');
+        console.error('Failed to submit.');
       }
     }
   };
@@ -134,12 +133,7 @@ export function HomePage() {
           </fieldset>
           <Stack align="stretch" justify="center">
             <label htmlFor="input4">input4 : </label>
-            <FileUploader
-              name="input4"
-              ref={fileUploaderRef}
-              uploadDone={uploadDone}
-              resetUploadDone={resetUploadDone}
-            />
+            <FileUploader2 name="input4" value={files} setValue={setFiles} multiple={true} />
           </Stack>
         </Flex>
         <button>Submit</button>

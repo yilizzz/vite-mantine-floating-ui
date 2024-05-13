@@ -7,7 +7,6 @@ import FileUploader4 from './file-uploader4';
 export default {
   title: 'Components/inputs/FileUploader4',
   component: FileUploader4,
-
 } as Meta<typeof FileUploader4>;
 
 const Template: StoryFn<typeof FileUploader4> = (args) => {
@@ -37,10 +36,7 @@ const Template: StoryFn<typeof FileUploader4> = (args) => {
   return (
     <div>
       <h1>Upload your files</h1>
-      <FileUploader4
-        value={uploadedFiles}
-        setValue={setUploadedFiles}
-      />
+      <FileUploader4 value={uploadedFiles} setValue={setUploadedFiles} multiple={false} />
       <button onClick={handleSubmit}>Submit Files</button>
     </div>
   );

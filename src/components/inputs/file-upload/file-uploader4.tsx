@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const FileUploader4 = ({ value, setValue }) => {
-  // const [files, setFiles] = useState(value || []); // Initialize with provided value
+const FileUploader4 = ({ value, setValue, multiple }) => {
   const fileInputRef = useRef(null);
 
   const handleFilesAdded = (event) => {
@@ -10,7 +9,7 @@ const FileUploader4 = ({ value, setValue }) => {
   };
 
   const handleFileDelete = (fileName) => {
-    const updatedFiles = value.filter(file => file.name !== fileName);
+    const updatedFiles = value.filter((file) => file.name !== fileName);
     setValue(updatedFiles);
   };
 
@@ -32,19 +31,22 @@ const FileUploader4 = ({ value, setValue }) => {
       <input
         ref={fileInputRef}
         type="file"
-        multiple
+        multiple={multiple}
         onChange={handleFilesAdded}
         style={{ display: 'none' }}
       />
-      <button type="button" onClick={() => fileInputRef.current.click()}>Select Files</button>
+      <button type="button" onClick={() => fileInputRef.current.click()}>
+        Select Files
+      </button>
 
       <ul>
-        {value && value.map((file, index) => (
-          <li key={index}>
-            {file.name} - {formatBytes(file.size)}
-            <button onClick={() => handleFileDelete(file.name)}>Delete</button>
-          </li>
-        ))}
+        {value &&
+          value.map((file, index) => (
+            <li key={index}>
+              {file.name} - {formatBytes(file.size)}
+              <button onClick={() => handleFileDelete(file.name)}>Delete</button>
+            </li>
+          ))}
       </ul>
       {value && <p>Total size of all files: {getTotalFileSize()}</p>}
     </>

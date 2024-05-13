@@ -37,12 +37,6 @@ const FileUploader = forwardRef((props, ref) => {
     },
   }));
   const inputRef = useRef();
-  useEffect(() => {
-    if (props.uploadDone) {
-      clearAllFiles();
-      props.resetUploadDone();
-    }
-  }, [props.uploadDone]);
 
   return (
     <StFileUploaderRoot>

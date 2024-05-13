@@ -7,14 +7,9 @@ import FileUploader from './file-uploader';
 export default {
   title: 'Components/inputs/FileUploader',
   component: FileUploader,
-
 } as Meta<typeof FileUploader>;
 const Template: StoryFn<typeof FileUploader> = (args) => {
   const fileUploaderRef = useRef();
-  const [uploadDone, setUploadDone] = useState(false);
-  const resetUploadDone = () => {
-    setUploadDone(false);
-  };
 
   const handleUploadFiles = async () => {
     if (fileUploaderRef.current) {
@@ -23,7 +18,6 @@ const Template: StoryFn<typeof FileUploader> = (args) => {
         const res = await axios.post('http://localhost:3001/upload', formData, {
           headers: { 'content-type': 'multipart/form-data' },
         });
-        setUploadDone(true);
         console.log('File uploaded successfully', res.data);
       } catch (error) {
         console.error('Failed to submit files.');
@@ -32,12 +26,7 @@ const Template: StoryFn<typeof FileUploader> = (args) => {
   };
   return (
     <div>
-      <FileUploader
-        {...args}
-        ref={fileUploaderRef}
-        uploadDone={uploadDone}
-        resetUploadDone={resetUploadDone}
-      />
+      <FileUploader {...args} ref={fileUploaderRef} />
 
       <button onClick={handleUploadFiles}>Upload Files</button>
     </div>
