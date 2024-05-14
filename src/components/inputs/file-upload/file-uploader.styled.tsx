@@ -5,28 +5,20 @@ import { keyframes } from '@emotion/css';
 import { Props } from './file-uploader.shared';
 import { theme } from '@/theme';
 
-export const StFileUploaderRoot = styled.div<Props>(() => [
-  {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: rem(30),
-    width: '100%',
-    padding: rem(20),
-    border: `${rem(0.5)} solid ${theme.colors.greenColor[9]}`,
-    borderRadius: rem(5),
-    color: theme.colors.greenColor[9],
-    background: theme.colors.grayColor[0],
-    fontSize: rem(16),
-    flexDirection: 'row',
-  },
-  // variant === 'row' && {
-  //   flexDirection: 'row',
-  // },
-  // variant === 'col' && {
-  //   flexDirection: 'column-reverse',
-  // },
-]);
+export const StFileUploaderRoot = styled.div<Props>({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: rem(30),
+  width: '100%',
+  padding: rem(20),
+  border: `${rem(0.5)} solid ${theme.colors.greenColor[9]}`,
+  borderRadius: rem(5),
+  color: theme.colors.greenColor[9],
+  background: theme.colors.grayColor[0],
+  fontSize: rem(16),
+  flexDirection: 'row',
+});
 
 export const StFileUploaderInfo = styled.div<Props>({
   display: 'flex',
