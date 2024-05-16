@@ -19,7 +19,6 @@ import {
 import {
   StTableRoot,
   StTableHeader,
-  StTableCell,
   StTable,
   StTablePagination,
   StTableInput,
@@ -30,12 +29,12 @@ import {
 } from './table.styled';
 import Button from '@/components/buttons/button/Button';
 
-const Table2 = ({ tableData, ...props }: Props2) => {
-  const [data, setData] = React.useState(() => [...tableData]);
+const Table2 = ({ data, ...props }: Props2) => {
+  // const [localData, setLocalData] = React.useState(() => [...data]);
   const columnHelper = createColumnHelper<Record<string, any>>();
   let columns = [];
-  if (tableData.length > 0) {
-    for (let key in tableData[0]) {
+  if (data.length > 0) {
+    for (let key in data[0]) {
       columns.push(
         columnHelper.accessor(key, {
           //   cell: (info) => <span>{info.getValue()}</span>,
@@ -201,7 +200,6 @@ const Table2 = ({ tableData, ...props }: Props2) => {
       </StTableNumberSearchDiv>
     ) : (
       <StTableHeaderInput
-        className="w-36 border shadow rounded"
         onChange={(e) => column.setFilterValue(e.target.value)}
         onClick={(e) => e.stopPropagation()}
         placeholder={`Search...`}

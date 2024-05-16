@@ -1,15 +1,19 @@
 import { HTMLAttributes, ReactElement } from 'react';
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
-  tableData: [];
-  sortKey: string;
+  data: [];
+  sortKey?: string;
   sortDirection?: 'asc' | 'desc';
   pageSize?: number;
+  handleEdit: () => {};
+  handleDelete: () => {};
+  showColumns?: string[];
 };
 
 type Person = {
+  id: number;
   firstName: string;
-  'last Name': string;
+  lastName: string;
   age: number;
   visits: number;
   status: string;
@@ -17,96 +21,108 @@ type Person = {
 };
 export const defaultData: Person[] = [
   {
+    id: 1,
     firstName: 'tanner',
-    'last Name': 'linsley',
+    lastName: 'linsley',
     age: 1,
     visits: 3,
     status: 'In Relationship',
     progress: 50,
   },
   {
+    id: 2,
     firstName: 'tandy',
-    'last Name': 'miller',
+    lastName: 'miller',
     age: 2,
     visits: 2,
     status: 'Single',
     progress: 80,
   },
   {
+    id: 3,
     firstName: 'joe',
-    'last Name': 'dirte',
+    lastName: 'dirte',
     age: 3,
     visits: 1,
     status: 'Complicated',
     progress: 10,
   },
   {
+    id: 4,
     firstName: 'aa',
-    'last Name': 'cc',
+    lastName: 'cc',
     age: 4,
     visits: 3,
     status: 'In Relationship',
     progress: 50,
   },
   {
+    id: 5,
     firstName: 'bb',
-    'last Name': 'zz',
+    lastName: 'zz',
     age: 5,
     visits: 2,
     status: 'Single',
     progress: 80,
   },
   {
+    id: 6,
     firstName: 'cc',
-    'last Name': 'yy',
+    lastName: 'yy',
     age: 6,
     visits: 1,
     status: 'Complicated',
     progress: 10,
   },
   {
+    id: 7,
     firstName: 'dd',
-    'last Name': 'tt',
+    lastName: 'tt',
     age: 7,
     visits: 3,
     status: 'In Relationship',
     progress: 50,
   },
   {
+    id: 8,
     firstName: 'ee',
-    'last Name': 'kk',
+    lastName: 'kk',
     age: 8,
     visits: 2,
     status: 'Single',
     progress: 80,
   },
   {
+    id: 9,
     firstName: 'ff',
-    'last Name': 'uu',
+    lastName: 'uu',
     age: 9,
     visits: 1,
     status: 'Complicated',
     progress: 10,
   },
   {
+    id: 10,
     firstName: 'gg',
-    'last Name': 'mm',
+    lastName: 'mm',
     age: 10,
     visits: 3,
     status: 'In Relationship',
     progress: 50,
   },
   {
+    id: 11,
     firstName: 'hh',
-    'last Name': 'hh',
+    lastName: 'hh',
     age: 11,
     visits: 2,
     status: 'Single',
     progress: 80,
   },
   {
+    id: 12,
     firstName: 'ii',
-    'last Name': 'vv',
+    lastName: 'vv',
     age: 12,
     visits: 1,
     status: 'Complicated',

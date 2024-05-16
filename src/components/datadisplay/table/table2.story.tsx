@@ -12,7 +12,7 @@ export default {
 const Template: StoryFn<typeof Table2> = (args) => {
   return (
     <div>
-      <Table2 {...args} tableData={defaultData} />
+      <Table2 {...args} data={defaultData} />
     </div>
   );
 };

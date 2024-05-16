@@ -18,7 +18,6 @@ import {
 import {
   StTableRoot,
   StTableHeader,
-  StTableCell,
   StTable,
   StTablePagination,
   StTableInput,
@@ -28,29 +27,39 @@ import {
 
 import Button from '@/components/buttons/button/Button';
 
-const Table = ({ tableData, sortKey, sortDirection = 'desc', pageSize = 10, ...props }: Props) => {
-  const [sorting, setSorting] = React.useState<SortingState>([
-    { id: sortKey, desc: sortDirection === 'desc' ? true : false },
-  ]);
+const Table = ({
+  data,
+  sortKey,
+  sortDirection = 'desc',
+  pageSize = 10,
+  handleEdit,
+  handleDelete,
+  showColumns,
+  ...props
+}: Props) => {
+  const [sorting, setSorting] = React.useState<SortingState>(
+    sortKey ? [{ id: sortKey, desc: sortDirection === 'desc' ? true : false }] : []
+  );
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: pageSize,
   });
   const columnHelper = createColumnHelper<Record<string, any>>();
   let columns = [];
-  if (tableData.length > 0) {
-    for (let key in tableData[0]) {
+  const localColumns = showColumns || (data.length > 0 ? Object.keys(data[0]) : []);
+  if (data.length > 0) {
+    // for (let key in showColumns) {
+    localColumns.forEach((col) => {
       columns.push(
-        columnHelper.accessor(key, {
+        columnHelper.accessor(col, {
           // cell: (info) => <StTableCell>{info.getValue()}</StTableCell>,
-          header: () => <span>{key}</span>,
+          id: col,
+          header: () => <span>{col}</span>,
           // footer: (info) => info.column.id,
         })
       );
-    }
+    });
   }
-
-  const [data, _setData] = React.useState(() => [...tableData]);
 
   const table = useReactTable({
     data,
@@ -64,36 +73,23 @@ const Table = ({ tableData, sortKey, sortDirection = 'desc', pageSize = 10, ...p
       pagination,
     },
   });
-  // console.log(table.getState().sorting);
-  // function formatWithSpaces(input) {
-  //   // Convert camelCase and PascalCase to space-separated words
-  //   let result = input.replace(/([a-z])([A-Z])/g, '$1 $2');
 
-  //   // Replace underscores with spaces
-  //   result = result.replace(/_/g, ' ');
-
-  //   // Replace multiple spaces with a single space
-  //   result = result.replace(/\s+/g, ' ');
-
-  //   // Trim any leading or trailing spaces
-  //   result = result.trim();
-
-  //   return result;
-  // }
-  // function formatArrayWithSpaces(array) {
-  //   return array.map(formatWithSpaces);
-  // }
   return (
     <StTableRoot>
       <StTable>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <StTableHeader key={header.id} colSpan={header.colSpan}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </StTableHeader>
-              ))}
+              {headerGroup.headers.map((header) => {
+                if (header.column.id != 'id') {
+                  return (
+                    <StTableHeader key={header.id} colSpan={header.colSpan}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </StTableHeader>
+                  );
+                }
+              })}
+              <StTableHeader>Actions</StTableHeader>
             </tr>
           ))}
         </thead>
@@ -105,12 +101,19 @@ const Table = ({ tableData, sortKey, sortDirection = 'desc', pageSize = 10, ...p
               return (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    );
+                    if (cell.column.id != 'id') {
+                      return (
+                        <td key={cell.id}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      );
+                    }
                   })}
+                  <td>
+                    {' '}
+                    <Button onClick={() => handleEdit(row.original.id)}>Edit</Button>
+                    <Button onClick={() => handleDelete(row.original.id)}>Delete</Button>
+                  </td>
                 </tr>
               );
             })}
