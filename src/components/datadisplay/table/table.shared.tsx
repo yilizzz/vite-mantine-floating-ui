@@ -1,17 +1,24 @@
-import { HTMLAttributes, ReactElement } from 'react';
+import { Table } from '@tanstack/react-table';
 
-export type Props = HTMLAttributes<HTMLDivElement> & {
+export interface TableRootProps {
   data: [];
-  sortKey?: string;
-  sortDirection?: 'asc' | 'desc';
-  pageSize?: number;
-  handleEdit: () => {};
-  handleDelete: () => {};
-  showColumns?: string[];
-};
+  children: React.ReactNode;
+}
+
+// export interface TableRowProps {
+//   children: React.ReactNode;
+// }
+
+export interface TableColProps {
+  RowAction: (row: any) => JSX.Element;
+  label: string;
+  dataKey?: string;
+  display?: boolean;
+  children: React.ReactNode;
+}
 
 type Person = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   age: number;
@@ -21,7 +28,7 @@ type Person = {
 };
 export const defaultData: Person[] = [
   {
-    id: 1,
+    id: '1a',
     firstName: 'tanner',
     lastName: 'linsley',
     age: 1,
@@ -30,7 +37,7 @@ export const defaultData: Person[] = [
     progress: 50,
   },
   {
-    id: 2,
+    id: '2b',
     firstName: 'tandy',
     lastName: 'miller',
     age: 2,
@@ -39,7 +46,7 @@ export const defaultData: Person[] = [
     progress: 80,
   },
   {
-    id: 3,
+    id: '3c',
     firstName: 'joe',
     lastName: 'dirte',
     age: 3,
@@ -48,7 +55,7 @@ export const defaultData: Person[] = [
     progress: 10,
   },
   {
-    id: 4,
+    id: '4',
     firstName: 'aa',
     lastName: 'cc',
     age: 4,
@@ -57,16 +64,16 @@ export const defaultData: Person[] = [
     progress: 50,
   },
   {
-    id: 5,
+    id: '5',
     firstName: 'bb',
     lastName: 'zz',
-    age: 5,
+    age: '5',
     visits: 2,
     status: 'Single',
     progress: 80,
   },
   {
-    id: 6,
+    id: '6d',
     firstName: 'cc',
     lastName: 'yy',
     age: 6,
@@ -75,7 +82,7 @@ export const defaultData: Person[] = [
     progress: 10,
   },
   {
-    id: 7,
+    id: '7z',
     firstName: 'dd',
     lastName: 'tt',
     age: 7,
@@ -84,7 +91,7 @@ export const defaultData: Person[] = [
     progress: 50,
   },
   {
-    id: 8,
+    id: 'r8',
     firstName: 'ee',
     lastName: 'kk',
     age: 8,
@@ -93,7 +100,7 @@ export const defaultData: Person[] = [
     progress: 80,
   },
   {
-    id: 9,
+    id: 'r9',
     firstName: 'ff',
     lastName: 'uu',
     age: 9,
@@ -102,7 +109,7 @@ export const defaultData: Person[] = [
     progress: 10,
   },
   {
-    id: 10,
+    id: '10',
     firstName: 'gg',
     lastName: 'mm',
     age: 10,
@@ -111,7 +118,7 @@ export const defaultData: Person[] = [
     progress: 50,
   },
   {
-    id: 11,
+    id: '11',
     firstName: 'hh',
     lastName: 'hh',
     age: 11,
@@ -120,7 +127,7 @@ export const defaultData: Person[] = [
     progress: 80,
   },
   {
-    id: 12,
+    id: '12',
     firstName: 'ii',
     lastName: 'vv',
     age: 12,

@@ -11,8 +11,11 @@ export const StTableRoot = styled(Stack)({
 });
 
 export const StTableHeader = styled.th({
-  textTransform: 'uppercase',
+  // textTransform: 'uppercase',
   background: theme.colors.greenColor[2],
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
 });
 
 export const StTable = styled.table({

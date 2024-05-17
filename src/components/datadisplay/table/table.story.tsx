@@ -1,33 +1,48 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import { useState, useRef } from 'react';
-import Table from './table';
+import { TableRoot, TableCol } from './table';
+import { Activity, Bean, Banana } from 'lucide-react';
+
 import { defaultData } from './table.shared';
 
 export default {
   title: 'Components/datadisplay/table/Table',
-  component: Table,
-} as Meta<typeof Table>;
+  component: TableRoot,
+} as Meta<typeof TableRoot>;
 
-const Template: StoryFn<typeof Table> = (args) => {
-  const handleEdit = (id) => {
-    console.log('You are going to edit item whose id is : ', id);
+const Template: StoryFn<typeof TableRoot> = (args) => {
+  const handleEdit = (value) => {
+    console.log('You are going to edit item : ', value);
   };
-  const handleDelete = (id) => {
-    console.log('You are going to delete item whose id is : ', id);
+  const handleDelete = (value) => {
+    console.log('You are going to delete item : ', value);
+  };
+  const RowAction = (row) => {
+    return (
+      <>
+        <button onClick={() => handleEdit(row)}>Edit</button>
+        <button onClick={() => handleDelete(row)}>Delete</button>
+      </>
+    );
   };
   return (
-    <div>
-      <Table
-        {...args}
-        data={defaultData}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        pageSize={5}
-        // id or other unique key field is required, and then the fields you want to show
-        showColumns={['id', 'firstName', 'lastName', 'age']}
-      />
-    </div>
+    <TableRoot {...args} data={defaultData}>
+      {/* {defaultData.map((data) => {
+        return (
+          <> */}
+      <TableCol label="First Name" dataKey="firstName">
+        Prenom :
+      </TableCol>
+      <TableCol label="Last Name" dataKey="lastName"></TableCol>
+      <TableCol label="Age" dataKey="age">
+        <Bean />
+      </TableCol>
+      <TableCol label="Action" display rowAction={RowAction}></TableCol>
+      {/* </>
+        );
+      })} */}
+    </TableRoot>
   );
 };
 

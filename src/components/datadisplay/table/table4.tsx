@@ -28,7 +28,7 @@ import {
   StTableNumberSearchDiv,
   StTableHeaderInput,
 } from './table.styled';
-import { TableRootProps, TableColProps } from './table.shared';
+import { TableRootProps, TableColProps } from './table4.shared';
 import Button from '@/components/buttons/button/Button';
 
 export const TableCol = ({
@@ -47,27 +47,27 @@ export const TableRoot = ({ data, children, ...props }: TableRootProps) => {
 
   const cols = Children.toArray(children);
   cols.forEach((col) => {
-    if (col.props.display) {
+    if (col.props.display === true) {
       columns.push(
         columnHelper.display({
           id: col.props.label,
-          header: col.props.label,
-          cell: (props) => <span>{col.props.rowAction(props.row.original)}</span>,
-          footer: col.props.label,
+          header: () => <span>{col.props.label}</span>,
+          cell: (props) => <span>{col.props.children}</span>,
+          footer: (props) => props.column.id,
         })
       );
     } else {
       columns.push(
         columnHelper.accessor(col.props.dataKey, {
           id: col.props.dataKey,
-          header: col.props.label,
+          header: () => <span>{col.props.label}</span>,
           cell: (info) => (
             <span>
-              {col.props.children}
               {info.getValue()}
+              {col.props.children}
             </span>
           ),
-          footer: col.props.label,
+          footer: (props) => props.column.id,
         })
       );
     }
@@ -81,7 +81,7 @@ export const TableRoot = ({ data, children, ...props }: TableRootProps) => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getRowId: (originalRow) => originalRow.id,
+    getRowId: (originalRow) => originalRow.id,
     debugTable: true,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -174,19 +174,6 @@ export const TableRoot = ({ data, children, ...props }: TableRootProps) => {
             );
           })}
         </tbody>
-        <tfoot>
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.footer, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
       </StTable>
 
       <StTablePagination>
