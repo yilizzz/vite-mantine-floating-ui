@@ -31,13 +31,7 @@ import {
 import { TableRootProps, TableColProps } from './table.shared';
 import Button from '@/components/buttons/button/Button';
 
-export const TableCol = ({
-  label,
-  dataKey,
-  display = false,
-  children,
-  ...props
-}: TableColProps) => {
+export const TableCol = ({ label, dataKey, display = false, ...props }: TableColProps) => {
   return <></>;
 };
 
@@ -61,12 +55,7 @@ export const TableRoot = ({ data, children, ...props }: TableRootProps) => {
         columnHelper.accessor(col.props.dataKey, {
           id: col.props.dataKey,
           header: col.props.label,
-          cell: (info) => (
-            <span>
-              {col.props.children}
-              {info.getValue()}
-            </span>
-          ),
+          cell: (info) => <span>{info.getValue()}</span>,
           footer: col.props.label,
         })
       );

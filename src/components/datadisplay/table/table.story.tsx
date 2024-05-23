@@ -3,6 +3,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { useState, useRef } from 'react';
 import { TableRoot, TableCol } from './table';
 import { Activity, Bean, Banana } from 'lucide-react';
+import Button from '@/components/buttons/button/Button';
 
 import { defaultData } from './table.shared';
 
@@ -21,27 +22,18 @@ const Template: StoryFn<typeof TableRoot> = (args) => {
   const RowAction = (row) => {
     return (
       <>
-        <button onClick={() => handleEdit(row)}>Edit</button>
-        <button onClick={() => handleDelete(row)}>Delete</button>
+        <Button onClick={() => handleEdit(row)}>Edit</Button>
+        <Activity />
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
       </>
     );
   };
   return (
     <TableRoot {...args} data={defaultData}>
-      {/* {defaultData.map((data) => {
-        return (
-          <> */}
-      <TableCol label="First Name" dataKey="firstName">
-        Prenom :
-      </TableCol>
-      <TableCol label="Last Name" dataKey="lastName"></TableCol>
-      <TableCol label="Age" dataKey="age">
-        <Bean />
-      </TableCol>
-      <TableCol label="Action" display rowAction={RowAction}></TableCol>
-      {/* </>
-        );
-      })} */}
+      <TableCol label="First Name" dataKey="firstName" />
+      <TableCol label="Last Name" dataKey="lastName" />
+      <TableCol label="Age" dataKey="age" />
+      <TableCol label="Action" display rowAction={RowAction} />
     </TableRoot>
   );
 };

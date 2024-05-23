@@ -39,11 +39,31 @@ const grayColor: MantineColorsTuple = [
   '#575757',
 ];
 
+const primaryColor: MantineColorsTuple = [
+  // white
+  '#FFFFFF',
+  // --Primary-50
+  '#F1F2F9',
+  // --Primary-200
+  '#8D98CE',
+  '#8278e5',
+  '#5d4fde',
+  // --Primary-500
+  '#42519B',
+  '#3c29db',
+  '#2e1ec2',
+  // --Primary-900
+  '#1F2547',
+  // AGP-Eerie
+  '#22221',
+];
+
 export const theme = createTheme({
   /** Put your mantine theme override here */
   colors: {
     greenColor,
     redColor,
     grayColor,
+    primaryColor,
   },
 });

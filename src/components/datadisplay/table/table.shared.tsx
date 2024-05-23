@@ -10,11 +10,11 @@ export interface TableRootProps {
 // }
 
 export interface TableColProps {
-  RowAction: (row: any) => JSX.Element;
+  RowAction?: (row: any) => JSX.Element;
   label: string;
   dataKey?: string;
   display?: boolean;
-  children: React.ReactNode;
+  // children: React.ReactNode;
 }
 
 type Person = {
