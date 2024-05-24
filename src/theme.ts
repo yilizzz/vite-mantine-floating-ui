@@ -39,7 +39,7 @@ const grayColor: MantineColorsTuple = [
   '#575757',
 ];
 
-const primaryColor: MantineColorsTuple = [
+const AGPColor: MantineColorsTuple = [
   // white
   '#FFFFFF',
   // --Primary-50
@@ -64,6 +64,6 @@ export const theme = createTheme({
     greenColor,
     redColor,
     grayColor,
-    primaryColor,
+    AGPColor,
   },
 });

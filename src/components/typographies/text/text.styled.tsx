@@ -3,7 +3,7 @@ import { Props } from './text.shared';
 import { rem } from 'polished';
 import { theme } from '@/theme';
 
-export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase }) => [
+export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase, size, italic }) => [
   {
     flexShrink: 0,
   },
@@ -11,17 +11,13 @@ export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase }) =
     variant === 'paragraphTitle' ||
     variant === 'content' ||
     variant === 'paragraphHeading' ||
-    variant === 'info' ||
     variant === 'formLabel') && {
     fontFamily: 'Montserrat',
   },
 
-  (variant === 'item' || variant === 'fact' || variant === 'detail') && {
-    fontFamily: 'Roboto',
-  },
   variant === 'number' && {
     fontFamily: 'Montserrat-Bold',
-    color: theme.colors.primaryColor[5],
+    color: theme.colors.AGPColor[5],
     fontSize: rem(61),
     lineHeight: rem(73),
     // '@media (min-width: 280px) and (max-width: 639px) and (orientation: portrait)': {
@@ -31,14 +27,14 @@ export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase }) =
     // },
   },
   variant === 'deco' && {
-    color: theme.colors.primaryColor[1],
+    color: theme.colors.AGPColor[1],
     fontSize: rem(85),
     fontWeight: '600',
     lineHeight: rem(102),
   },
   variant === 'title' && {
     fontFamily: 'Montserrat-Bold',
-    color: color || theme.colors.primaryColor[9],
+    color: color || theme.colors.AGPColor[9],
     fontSize: rem(39),
     lineHeight: rem(47),
     // '@media (min-width: 1536px) and (orientation: portrait)': {
@@ -47,57 +43,64 @@ export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase }) =
   },
 
   variant === 'paragraphTitle' && {
-    color: color || theme.colors.primaryColor[8],
+    color: color || theme.colors.AGPColor[8],
     fontSize: rem(31),
     fontWeight: weight || '600',
     lineHeight: rem(37),
   },
   variant === 'cardTitle' && {
     fontFamily: 'Montserrat-Bold',
-    color: color || theme.colors.primaryColor[5],
+    color: color || theme.colors.AGPColor[5],
     fontSize: rem(25),
     lineHeight: rem(36),
   },
 
   variant === 'content' && {
-    color: color || theme.colors.primaryColor[8],
+    color: color || theme.colors.AGPColor[8],
     fontSize: rem(20),
     fontWeight: '600',
     lineHeight: rem(28),
   },
   variant === 'paragraphHeading' && {
-    color: theme.colors.primaryColor[9],
+    color: theme.colors.AGPColor[9],
     fontSize: rem(28),
     fontWeight: '600',
     lineHeight: rem(28),
   },
   variant === 'info' && {
-    color: color || theme.colors.primaryColor[9],
+    fontFamily:
+      weight === '400'
+        ? 'Montserrat'
+        : weight === '500'
+          ? 'Montserrat-Medium'
+          : 'Montserrat-SemiBold',
+    color: color || theme.colors.AGPColor[9],
     fontSize: rem(16),
-    fontWeight: weight || '500',
-    lineHeight: rem(22),
+    lineHeight: rem(21),
   },
   variant === 'formLabel' && {
-    color: theme.colors.primaryColor[9],
+    color: theme.colors.AGPColor[0],
     fontSize: rem(12),
     fontWeight: '600',
     lineHeight: rem(18),
   },
 
   variant === 'item' && {
-    color: color || theme.colors.primaryColor[9],
-    fontSize: rem(20),
-    fontWeight: weight || '400',
+    fontFamily: weight === '400' ? 'Roboto' : weight === '300' ? 'Roboto-Light' : 'Roboto-Bold',
+    color: color || theme.colors.AGPColor[9],
+    fontSize: size ? rem(size) : rem(20),
     lineHeight: rem(28),
   },
   variant === 'fact' && {
-    color: color || theme.colors.primaryColor[5],
+    fontFamily: weight === '700' ? 'Roboto-Bold' : 'Roboto',
+    color: color || theme.colors.AGPColor[5],
     fontSize: rem(16),
     fontWeight: weight || '400',
     lineHeight: rem(22),
   },
   variant === 'detail' && {
-    color: theme.colors.primaryColor[9],
+    fontFamily: 'Roboto',
+    color: theme.colors.AGPColor[9],
     fontSize: rem(14),
     fontWeight: '400',
     lineHeight: rem(22),
@@ -105,7 +108,7 @@ export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase }) =
   uppercase && {
     textTransform: 'uppercase',
   },
-  // italic && {
-  //   italic: true,
-  // },
+  italic && {
+    fontStyle: 'italic',
+  },
 ]);

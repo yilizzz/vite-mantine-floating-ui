@@ -6,8 +6,9 @@ function Text({
   variant = 'info',
   color,
   weight,
+  size,
   uppercase = false,
-  // italic = false,
+  italic = false,
   ...props
 }: Props) {
   return (
@@ -16,7 +17,8 @@ function Text({
       color={color}
       weight={weight}
       uppercase={uppercase}
-      // italic={italic}
+      size={size}
+      italic={italic}
       {...props}
     >
       <span>{children}</span>

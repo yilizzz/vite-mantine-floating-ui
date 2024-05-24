@@ -17,5 +17,6 @@ export type Props = HTMLAttributes<HTMLDivElement> & {
   color?: string;
   weight?: string;
   uppercase?: boolean;
-  // italic?: boolean;
+  size?: number;
+  italic?: boolean;
 };

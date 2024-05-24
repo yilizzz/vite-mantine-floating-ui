@@ -1,8 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-export type Props = HTMLAttributes<HTMLDivElement> & {
-  color?: string;
-  bg?: string;
-  size?: number;
-  badge?: boolean;
+export type Props = HTMLAttributes<HTMLImageElement> & {
+  size?: 8 | 20 | 24 | 32 | 36;
+  src?: string;
 };
