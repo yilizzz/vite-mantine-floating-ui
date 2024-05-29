@@ -6,13 +6,10 @@ import { theme } from '@/theme';
 export const StDiv = styled.div<Props>(({ variant, color, weight, uppercase, size, italic }) => [
   {
     flexShrink: 0,
-  },
-  (variant === 'deco' ||
-    variant === 'paragraphTitle' ||
-    variant === 'content' ||
-    variant === 'paragraphHeading' ||
-    variant === 'formLabel') && {
     fontFamily: 'Montserrat',
+    fontSize: rem(20),
+    fontWeight: '400',
+    color: 'var(--text-primary)',
   },
 
   variant === 'number' && {

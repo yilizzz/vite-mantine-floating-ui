@@ -3,7 +3,7 @@ import { StDiv } from './text.styled';
 
 function Text({
   children,
-  variant = 'info',
+  variant,
   color,
   weight,
   size,

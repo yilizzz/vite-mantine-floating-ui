@@ -4,8 +4,8 @@ import { Center } from '@mantine/core';
 import { rem } from 'polished';
 
 export const StIcon = styled.img<Props>(({ size }) => [
-  {
-    width: rem(size),
-    height: rem(size),
-  },
+  // {
+  //   width: rem(size),
+  //   height: rem(size),
+  // },
 ]);

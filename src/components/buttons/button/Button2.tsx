@@ -1,39 +1,39 @@
 import { Group, Center } from '@mantine/core';
 import { StButton } from './Button2.styled';
 import { Props } from './Button2.shared';
-import mail from '@/assets/email.svg';
+import email from '@/assets/email.svg';
+import * as React from "react"
 
-function Button2({
+export const Button2 = React.forwardRef({
   children,
   variant = 'primary',
-  size = 'small',
+  size,
   disabled,
-  iconRight,
-  radius = 4,
+  icon,
+  radius = 12,
   ...props
-}: Props) {
+}: Props,ref)=> {
   return (
     <StButton
       variant={variant}
       size={size}
-      iconRight={iconRight}
+      icon={icon}
       disabled={disabled}
       radius={radius}
       {...props}
     >
-      {variant === 'email' ? (
+      {variant === 'icon' ? (
         <Center>
-          <img src={mail}></img>
+          <img src={email}></img>
         </Center>
       ) : (
         <Center>
           {children}
           <span style={{ width: size === 'small' ? '8px' : '16px' }}></span>
-          {iconRight ? iconRight : <></>}
+          {icon ? icon : <></>}
         </Center>
       )}
     </StButton>
   );
 }
 
-export default Button2;

@@ -16,16 +16,10 @@ const Template: StoryFn<typeof Button2> = (args) => (
 
 const TemplateIcon1: StoryFn<typeof Button2> = (args) => (
   <div style={{ backgroundColor: 'black', padding: '20px' }}>
-    <Button2 {...args} iconRight={<Icon size={20} src={arrowB} />}>
+    <Button2 {...args} iconRight={<Icon src={arrowB} />}>
       Envoyer
     </Button2>
   </div>
-);
-
-const TemplateIcon2: StoryFn<typeof Button2> = (args) => (
-  <Button2 {...args} iconRight={<Icon size={20} src={arrowW} />}>
-    Voir le Use Case
-  </Button2>
 );
 
 const TemplateLong: StoryFn<typeof Button2> = (args) => (
@@ -39,11 +33,6 @@ Default.args = {};
 
 export const Secondary = TemplateIcon1.bind({});
 Secondary.args = { variant: 'secondary' };
-
-export const Tertiary = TemplateIcon2.bind({});
-Tertiary.args = {
-  variant: 'tertiary',
-};
 
 export const Long = TemplateLong.bind({});
 Long.args = {};

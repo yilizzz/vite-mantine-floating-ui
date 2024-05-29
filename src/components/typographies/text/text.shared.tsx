@@ -3,17 +3,14 @@ import { HTMLAttributes } from 'react';
 export type Props = HTMLAttributes<HTMLDivElement> & {
   variant:
     | 'number'
-    | 'deco'
-    | 'title'
-    | 'cardTitle'
-    | 'paragraphTitle'
-    | 'content'
-    | 'paragraphHeading'
-    | 'info'
-    | 'formLabel'
-    | 'item'
-    | 'fact'
-    | 'detail';
+    | 'frameTitle'
+    | 'sectionTitle'
+    | 'sectionTitleAlt'
+    | 'contentTitle'
+    | 'caption'
+    | 'captionAlt'
+    | 'label'
+    | 'footerLink';
   color?: string;
   weight?: string;
   uppercase?: boolean;

@@ -1,0 +1,22 @@
+:root {
+  --text-primary: #222221;
+  --text-secondary: #42519b;
+  --text-tertiary: #8d98ce;
+
+  --button-primary: #42519b;
+  --button-secondary: #1f2547;
+  --button-text: #f1f2f9;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0 auto;
+  overflow-x: hidden;
+}

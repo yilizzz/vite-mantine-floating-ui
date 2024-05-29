@@ -6,7 +6,6 @@ import { rem } from 'polished';
 import { Group, Center, Stack } from '@mantine/core';
 import logo from '@/assets/footerLOGO.svg';
 import band from '@/assets/footerBand.svg';
-import Text from '@/components/typographies/text/text';
 
 const StNavFooter = styled.div({
   display: 'flex',
@@ -38,18 +37,19 @@ function Footer() {
   return (
     <StNavFooter>
       <div>
-        <Image src={logo} alt="logo"></Image>
-        <Image src={band} alt=""></Image>
+        {/* <Image src={logo} alt="logo"></Image>
+        <Image src={band} alt=""></Image> */}
       </div>
       <Stack>
-        <Text variant="item">Accès à la plateforme</Text>
-        <Text variant="item">Nos solutions</Text>
-        <Text variant="item">Nos références</Text>
-        <Text variant="item">Nous découvrir</Text>
-        <Text variant="item">Recrutement</Text>
-        <Text variant="item">Actus</Text>
-        <Text variant="item">Contactez-nous</Text>
+        <p>Accès à la plateforme</p>
+        <p>Nos solutions</p>
+        <p>Nos références</p>
+        <p>Nous découvrir</p>
+        <p>Recrutement</p>
+        <p>Actus</p>
+        <p>Contactez-nous</p>
       </Stack>
+      <Stack></Stack>
       <Stack></Stack>
     </StNavFooter>
   );

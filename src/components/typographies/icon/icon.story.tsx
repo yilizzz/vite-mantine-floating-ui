@@ -13,10 +13,10 @@ export default {
   title: 'Components/typographies/icon',
   component: Icon,
   argTypes: {
-    size: {
-      control: 'select',
-      options: [8, 20, 24, 32, 36],
-    },
+    // size: {
+    //   control: 'select',
+    //   options: [8, 20, 24, 32, 36],
+    // },
     src: {
       control: 'select',
       options: [plane, message, arrowB, arrowW, linkedin, check, pin],

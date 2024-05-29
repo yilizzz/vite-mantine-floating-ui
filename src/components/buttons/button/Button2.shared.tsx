@@ -1,9 +1,9 @@
 import { HTMLAttributes, ReactElement } from 'react';
 
 export type Props = HTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'email';
-  iconRight?: ReactElement;
+  variant?: 'primary' | 'secondary' | 'inverse' | 'outline' | 'icon';
+  icon?: ReactElement;
   disabled?: boolean;
-  size?: 'small' | 'large';
+  small?: boolean;
   radius?: 4 | 12;
 };
